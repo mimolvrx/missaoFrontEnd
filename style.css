@@ -20,8 +20,8 @@ body {
 
 /* PLAYER */
 #player {
-  width: 60px;
-  height: 60px;
+  width: 90px;
+  height: 90px;
   position: absolute;
   bottom: 10px;
   left: 200px;
@@ -114,6 +114,31 @@ body {
   color: white;
 
   z-index: 20;
+}
+
+/* BOTÃO JOGAR NOVAMENTE */
+.btn-restart {
+  position: absolute;
+  bottom: 10px;
+  width: 222px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  padding: 8px 20px;
+  font-size: 16px;
+
+  border: none;
+  border-radius: 8px;
+
+  background: #3b82f6;
+  color: white;
+
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-restart:hover {
+  background: #2563eb;
 }
 
 /* tela incial */

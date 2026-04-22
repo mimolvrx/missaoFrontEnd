@@ -1,7 +1,7 @@
 const game = document.getElementById("game");
 const player = document.getElementById("player");
-const scoreEl = document.getElementById("score");
-const livesEl = document.getElementById("lives");
+const scoreEl = document.getElementById("score"); /* pontuação */
+const livesEl = document.getElementById("lives"); /* vidas */
 const endScreen = document.getElementById("endScreen");
 const fade = document.getElementById("fade");
 const faseTexto = document.getElementById("faseTexto");
@@ -11,15 +11,17 @@ const startBtn = document.getElementById("startBtn");
 let playerX = 200;
 let score = 0;
 let lives = 3;
-let fase = 1;
+let fase = 1; /* fase */
 let gameAtivo = false;
+let emTransicao = false;
 
+/* BOTÃO INICIAR */
 startBtn.addEventListener("click", () => {
   startScreen.style.display = "none";
   gameAtivo = true;
 
   atualizarFase();
-  mostrarTextoFase();
+  mostrarTextoFase(); /* exibe o nome da fase */
 
   setInterval(criarTag, 1000);
 });
@@ -44,12 +46,12 @@ const fases = {
 function atualizarFase() {
   if (fase === 1) {
     game.style.backgroundImage = "url('img/cenario_html.png')";
-    player.style.backgroundImage = "url('img/skin_html.png')";
+    player.style.backgroundImage = "url('img/skin_html(1).png')";
   }
 
   if (fase === 2) {
     game.style.backgroundImage = "url('img/cenario_css.png')";
-    player.style.backgroundImage = "url('img/skin_css.png')";
+    player.style.backgroundImage = "url('img/skin_css(1).png')";
   }
 
   if (fase === 3) {
@@ -87,15 +89,27 @@ function mostrarTextoFase() {
   }, 1500);
 }
 
-/* FADE */
+/* TROCA DE FASE COM PAUSA */
 function trocarFaseComFade(novaFase) {
+  emTransicao = true;
+
+  // remove TODAS as tags da tela
+  document.querySelectorAll(".tag").forEach(tag => tag.remove());
+
   fade.style.opacity = 1;
 
   setTimeout(() => {
     fase = novaFase;
     atualizarFase();
     mostrarTextoFase();
+
     fade.style.opacity = 0;
+
+    // ⏳ TEMPO DE PAUSA ENTRE FASES
+    setTimeout(() => {
+      emTransicao = false;
+    }, 2000);
+
   }, 500);
 }
 
@@ -111,8 +125,8 @@ document.addEventListener("keydown", (e) => {
 });
 
 /* CRIAR TAG */
-function criarTag() {
-  if (!gameAtivo) return;
+function criarTag() { /* gera e movimenta os elementos */
+  if (!gameAtivo || emTransicao) return;
 
   const faseAtual = fases[fase];
   const isCorrect = Math.random() > 0.4;
@@ -133,8 +147,9 @@ function criarTag() {
   let y = 0;
 
   const intervalo = setInterval(() => {
-    if (!gameAtivo) {
+    if (!gameAtivo || emTransicao) {
       clearInterval(intervalo);
+      tag.remove();
       return;
     }
 
@@ -168,7 +183,7 @@ function criarTag() {
 
     // troca de fase
     if (score >= 10 && fase === 1) {
-      trocarFaseComFade(2);
+      trocarFaseComFade(2); /* muda de fase, aplica o fade e ativa a pausa*/
     }
 
     if (score >= 20 && fase === 2) {
@@ -178,14 +193,14 @@ function criarTag() {
     // vitória
     if (score >= 30) {
       gameAtivo = false;
-      mostrarVitoria();
+      mostrarVitoria(); /* finalizam o jogo */
       clearInterval(intervalo);
     }
 
     // derrota
     if (lives <= 0) {
       gameAtivo = false;
-      mostrarDerrota();
+      mostrarDerrota(); /* finalizam o jogo */
       clearInterval(intervalo);
     }
 
@@ -195,13 +210,9 @@ function criarTag() {
 /* TELAS FINAIS */
 function mostrarVitoria() {
   endScreen.style.display = "flex";
-
   endScreen.innerHTML = `
-    <img src="img/imagem.png" style="width: 100%; height: 100%; object-fit: cover;">
-    <button onclick="location.reload()" 
-      style="position:absolute; bottom:20px; padding:10px 20px; font-size:16px;">
-      Jogar novamente
-    </button>
+    <img src="img/imagem.png" style="width:100%; height:100%; object-fit:cover;">
+    <button class="btn-restart" onclick="location.reload()">Jogar novamente</button>
   `;
 }
 
@@ -209,11 +220,6 @@ function mostrarDerrota() {
   endScreen.style.display = "flex";
   endScreen.innerHTML = `
     <h1>💀 Game Over</h1>
-    <p>Você perdeu todas as vidas!</p>
     <button onclick="location.reload()">Tentar novamente</button>
   `;
 }
-
-/* INICIAR */
-atualizarFase();
-mostrarTextoFase();
