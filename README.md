@@ -77,6 +77,13 @@ Controla movimentação, colisões, pontuação, fases e estados do jogo.
 
 ---
 
+## 🌐 Demonstração
+
+🔗 Acesse o jogo online:  
+https://mimolvrx.github.io/missaoFrontEnd/
+
+---
+
 ## 👩‍💻 Desenvolvido por
 
 * Yasmim Oliveira
