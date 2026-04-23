@@ -53,7 +53,11 @@ O sistema utiliza:
 
 ## 🎉 Tela Final
 
-Ao completar todas as fases, o jogador visualiza uma tela especial com um **“site” simbólico**, representando tudo o que foi construído durante o jogo ao coletar corretamente os elementos de HTML, CSS e JavaScript.
+Ao completar todas as fases, o jogador visualiza uma tela especial que representa um **site construído ao longo do jogo**.
+
+Durante cada fase, o jogador coleta elementos essenciais de **HTML, CSS e JavaScript**. Esses elementos simbolizam a construção de um site completo, desde a estrutura até o estilo e a interatividade.
+
+👉 Ou seja, ao final da jornada, o jogador não apenas vence o jogo, mas também **“constrói” simbolicamente seu próprio site**, aplicando os conceitos aprendidos de forma prática e visual.
 
 ---
 
